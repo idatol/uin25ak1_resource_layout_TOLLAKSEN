@@ -13,7 +13,7 @@ resources.map((seksjon) => {
 document.getElementById("meny").innerHTML = seksjonMenypunktHTML;
 
 
-//Går gjennom seksjoner og lager en seksjon for hver
+//Går gjennom seksjoner og lager en seksjon for hver katogori
 resources.map((seksjon) => {
     seksjonerHTML += `
         <article id="${seksjon.category}">
@@ -43,7 +43,7 @@ function visSeksjon(category) {
     });
 }
 
-// Legger til event listeners på menylenker
+// Legger til event listeners på menylenker for å vise riktig seksjon når den klikkes på
 const menyLenker = document.querySelectorAll("#meny a");
 menyLenker.forEach((lenke) => {
     lenke.addEventListener("click", (event) => {
@@ -53,7 +53,7 @@ menyLenker.forEach((lenke) => {
     });
 });
 
-// Vis den første seksjonen som standard npr siden lastes
+// Viser den første seksjonen som standard når siden lastes
 visSeksjon(resources[0].category);
 
 
