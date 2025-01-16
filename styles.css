@@ -1,5 +1,5 @@
 :root {
-    --lightGrey: #58699D;
+    --blue: #58699D;
     --darkGrey: #2A324B;
     --lightGrey: #E1E5EE;
     --white: #fff;
@@ -7,21 +7,71 @@
 
 body{
     background-color: var(--lightGrey);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
 }
 
+main{
+    width: 75%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+
 nav{
-    background-color: var(--darkGrey);
+    background-color: var(--lightGrey);
     display: flex;
     justify-content: space-between;
     margin: 0;
+    gap: 10px;
     a{
         text-decoration: none;
         color: var(--white);
-        padding: 1rem;
+        background-color: var(--darkGrey);
+        padding: 1rem 4rem;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 900;
+    }
+    a:hover{
+        background-color: var(--white);
+        color: var(--darkGrey);
     }
 }
 
 
 section{
     background-color: var(--white);
+    padding: 4rem;
+    h1{
+        font-family: "Montserrat", sans-serif;
+        font-weight: 900;
+        font-size: 2rem;
+        color: var(--darkGrey);
+    }
+    p{
+        font-family: "Montserrat", sans-serif;
+        font-weight: 400;
+        font-size: 1rem;
+        color: black;
+    }
+    ul li a{
+        font-family: "Montserrat", sans-serif;
+        font-weight: 400;
+        font-size: 1rem;
+        color: var(--blue);
+    }
 }
+
+.hidden{
+    display: none;
+}
+nav a.active {
+    background-color: var(--white);
+    color: var(--darkGrey);
+    font-family: "Montserrat", sans-serif;
+    font-weight: 900;
+  }

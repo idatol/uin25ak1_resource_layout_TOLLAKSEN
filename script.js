@@ -1,38 +1,69 @@
-// Velg <main> for å legge til seksjoner
-const main = document.querySelector("main");
+console.log(resources)
 
-// Koden under oppretter seksjoner for hver kategori 
-// dynamisk istedenfor å skrive dem manuelt i HTML.
-// Iterer gjennom dataene i ressurser.js
-resources.forEach(resource => {
-    // Lag en seksjon for hver kategori
-    const section = document.createElement("section");
-    // Sett id til seksjonen som passer til kategorien
-    section.id = resource.category;
+//Oppretter variabler for å holde på HTML
+let seksjonMenypunktHTML = ""
+let seksjonerHTML = ""
 
-    // Legg til tittel som h1 element
-    const title = document.createElement("h1");
-    title.textContent = resource.category;
-    section.appendChild(title);
+//Oppretter nav for hver kategori
+resources.map((seksjon) => {
+    seksjonMenypunktHTML += `<a href="#${seksjon.category}">${seksjon.category}</a>`;
+});
 
-    // Legg til beskrivelse som p element
-    const description = document.createElement("p");
-    description.textContent = resource.text;
-    section.appendChild(description);
+//Legger til menyen i HTML
+document.getElementById("meny").innerHTML = seksjonMenypunktHTML;
 
-    // Lag en liste for kilder
-    const sourceList = document.createElement("ul");
-    resource.sources.forEach(source => {
-        const listItem = document.createElement("li");
-        const link = document.createElement("a");
-        link.href = source.url;
-        link.textContent = source.title;
-        listItem.appendChild(link);
-        sourceList.appendChild(listItem);
+
+//Går gjennom seksjoner og lager en seksjon for hver
+resources.map((seksjon) => {
+    seksjonerHTML += `
+        <article id="${seksjon.category}">
+            <h1>${seksjon.category}</h1>
+            <p>${seksjon.text}</p>
+            <ul>
+                ${seksjon.sources.map(source => `<li><a href="${source.url}" target="_blank">${source.title}</a></li>`).join("")}
+            </ul>
+        </article>`;
+});
+
+//Legger til seksjonene i HTML
+document.getElementById("kategori-oversikt").innerHTML = seksjonerHTML;
+
+// Funksjon for å vise valgt seksjon og skjule andre
+function visSeksjon(category) {
+    const artikler = document.querySelectorAll("article");
+    artikler.forEach((artikkel) => {
+        //Hvis artikkelen har samme id som kategorien vi trykker på, vises den
+        if (artikkel.id === category) {
+            artikkel.classList.remove("hidden");
+        } 
+        //Hvis artikkelen ikke har blitt trykket på, skjules den
+        else {
+            artikkel.classList.add("hidden");
+        }
     });
-    // Legg til listen i seksjonen
-    section.appendChild(sourceList);
+}
 
-    // Legg til en og en seksjonen i main
-    main.appendChild(section);
+// Legger til event listeners på menylenker
+const menyLenker = document.querySelectorAll("#meny a");
+menyLenker.forEach((lenke) => {
+    lenke.addEventListener("click", (event) => {
+        event.preventDefault();
+        const category = lenke.getAttribute("href").substring(1);
+        visSeksjon(category);
+    });
+});
+
+// Vis den første seksjonen som standard npr siden lastes
+visSeksjon(resources[0].category);
+
+
+//Kode for å indikere hvilken kategori som er valgt
+const navLinks = document.querySelectorAll("nav a");
+
+//Når en kategori blir trykket på, fjernes "active" fra alle kategorier og legges til den som er trykket på
+navLinks.forEach(link => {
+  link.addEventListener("click", function() {
+    navLinks.forEach(link => link.classList.remove("active"));
+    this.classList.add("active");
+  });
 });
